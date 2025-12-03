@@ -13,20 +13,21 @@ with open("input.txt", "r") as f:
         num = int(line[1:])
         count = math.floor((num / 100))
 
+        start_zero = dial == 0
+
         if direction == "R":
             dial += (num % 100)
+            if dial > 99:
+                dial -= 100
+                count += 1
         else:
             dial -= (num % 100)
-
-        if dial < 0:
-            dial += 100
-            count += 1
-        elif dial > 99:
-            dial -= 100
-            count += 1
-        
-        if dial == 0:
-            count += 1
+            if dial < 0:
+                dial += 100
+                if not start_zero:
+                    count += 1
+            elif dial == 0:
+                count += 1
 
         password += count
 
